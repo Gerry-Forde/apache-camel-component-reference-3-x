@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Ref :: Red Hat Integration</title>
-    <meta name="description" content="Route messages to an endpoint looked up dynamically by name in the Camel Registry.">
+    <title>Google BigQuery Standard SQL :: Red Hat Integration</title>
+    <meta name="description" content="Access Google Cloud BigQuery service using SQL queries.">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -118,7 +118,7 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="google-bigquery-component.html">Google BigQuery</a>
   </li>
-  <li class="nav-item" data-depth="3">
+  <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="google-bigquery-sql-component.html">Google BigQuery Standard SQL</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -201,7 +201,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quartz-component.html">Quartz</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="ref-component.html">Ref</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -667,44 +667,130 @@
   <ul>
     <li><a href="index.html">Camel Components</a></li>
     <li><a href="index.html">Components</a></li>
-    <li><a href="ref-component.html">Ref</a></li>
+    <li><a href="google-summary.html">Google</a></li>
+    <li><a href="google-bigquery-sql-component.html">Google BigQuery Standard SQL</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///home/gforde/mygit/ACCR-3-18-3/camel/docs/components/modules/ROOT/pages/ref-component.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///home/gforde/mygit/ACCR-3-18-3/camel/docs/components/modules/ROOT/pages/google-bigquery-sql-component.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Ref</h1>
+<h1 class="page">Google BigQuery Standard SQL</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Since Camel 1.2</strong></p>
+<p><strong>Since Camel 2.23</strong></p>
 </div>
 <div class="paragraph">
-<p><strong>Both producer and consumer are supported</strong></p>
+<p><strong>Only producer is supported</strong></p>
 </div>
 <div class="paragraph">
-<p>The Ref component is used for lookup of existing endpoints bound in
-the Registry.</p>
+<p>The Google BigQuery SQL component provides access
+to <a href="https://cloud.google.com/bigquery/">Cloud BigQuery Infrastructure</a> via
+the <a href="https://developers.google.com/apis-explorer/#p/bigquery/v2/bigquery.jobs.query">Google Client Services API</a>.</p>
+</div>
+<div class="paragraph">
+<p>The current implementation supports only standard SQL
+<a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax">DML queries</a>.</p>
+</div>
+<div class="paragraph">
+<p>Maven users will need to add the following dependency to their pom.xml
+for this component:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.camel&lt;/groupId&gt;
+    &lt;artifactId&gt;camel-google-bigquery&lt;/artifactId&gt;
+    &lt;!-- use the same version as your Camel core version --&gt;
+    &lt;version&gt;x.x.x&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_uri_format"><a class="anchor" href="#_uri_format"></a>URI format</h2>
+<h2 id="GoogleBigQuery-AuthenticationConfiguration"><a class="anchor" href="#GoogleBigQuery-AuthenticationConfiguration"></a>Authentication Configuration</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Google BigQuery component authentication is targeted for use with the GCP Service Accounts.
+For more information please refer to <a href="https://cloud.google.com/docs/authentication">Google Cloud Platform Auth Guide</a></p>
+</div>
+<div class="paragraph">
+<p>Google security credentials can be set explicitly by providing the path to the GCP credentials file location.</p>
+</div>
+<div class="paragraph">
+<p>Or they are set implicitly, where the connection factory falls back on
+<a href="https://developers.google.com/identity/protocols/application-default-credentials#howtheywork">Application Default Credentials</a>.</p>
+</div>
+<div class="paragraph">
+<p>When you have the <strong>service account key</strong> you can provide authentication credentials to your application code.
+Google security credentials can be set through the component endpoint:</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>ref:someName[?options]</pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String endpoint = "google-bigquery-sql://project-id:query?serviceAccountKey=/home/user/Downloads/my-key.json";</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Where <strong>someName</strong> is the name of an endpoint in the
-Registry (usually, but not always, the Spring
-registry). If you are using the Spring registry, <code>someName</code> would be the
-bean ID of an endpoint in the Spring registry.</p>
+<p>You can also use the base64 encoded content of the authentication credentials file if you don&#8217;t want to set a file system path.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String endpoint = "google-bigquery-sql://project-id:query?serviceAccountKey=base64:&lt;base64 encoded&gt;";</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or by setting the environment variable <code>GOOGLE_APPLICATION_CREDENTIALS</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/my-key.json"</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_uri_format"><a class="anchor" href="#_uri_format"></a>URI Format</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>google-bigquery-sql://project-id:query?[options]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>google-bigquery-sql://project-17248459:delete * from test.table where id=@myId
+
+google-bigquery-sql://project-17248459:delete * from ${datasetId}.${tableId} where id=@myId</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>parameters in form ${name} are extracted from message headers and formed the translated query</p>
+</li>
+<li>
+<p>parameters in form @name are extracted from body or message headers and sent to Google Bigquery</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can externalize your SQL queries to files in the classpath or file system as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>google-bigquery-sql://project-17248459::classpath:delete.sql</pre>
+</div>
 </div>
 </div>
 </div>
@@ -765,7 +851,7 @@ In other words placeholders allows to externalize the configuration from your co
 <h2 id="_component_options"><a class="anchor" href="#_component_options"></a>Component Options</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Ref component supports 3 options, which are listed below.</p>
+<p>The Google BigQuery Standard SQL component supports 4 options, which are listed below.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -784,13 +870,13 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_bridgeErrorHandler"></a>
-<a href="#_component_option_bridgeErrorHandler" class="anchor"></a><strong>bridgeErrorHandler</strong> (consumer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_connectionFactory"></a>
+<a href="#_component_option_connectionFactory" class="anchor"></a><strong>connectionFactory</strong> (producer)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Allows for bridging the consumer to the Camel routing Error Handler, which mean any exceptions occurred while the consumer is trying to pickup incoming messages, or the likes, will now be processed as a message and handled by the routing Error Handler. By default the consumer will use the org.apache.camel.spi.ExceptionHandler to deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
+<p><strong>Autowired</strong> ConnectionFactory to obtain connection to Bigquery Service. If not provided the default one will be used.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GoogleBigQueryConnectionFactory</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_lazyStartProducer"></a>
@@ -800,6 +886,15 @@ In other words placeholders allows to externalize the configuration from your co
 </div></div></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_projectId"></a>
+<a href="#_component_option_projectId" class="anchor"></a><strong>projectId</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Google Cloud Project Id.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_autowiredEnabled"></a>
@@ -818,18 +913,18 @@ In other words placeholders allows to externalize the configuration from your co
 <h2 id="_endpoint_options"><a class="anchor" href="#_endpoint_options"></a>Endpoint Options</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Ref endpoint is configured using URI syntax:</p>
+<p>The Google BigQuery Standard SQL endpoint is configured using URI syntax:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ref:name</pre>
+<pre>google-bigquery-sql:projectId:queryString</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>with the following path and query parameters:</p>
 </div>
 <div class="sect2">
-<h3 id="_path_parameters_1_parameters"><a class="anchor" href="#_path_parameters_1_parameters"></a>Path Parameters (1 parameters)</h3>
+<h3 id="_path_parameters_2_parameters"><a class="anchor" href="#_path_parameters_2_parameters"></a>Path Parameters (2 parameters)</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -847,10 +942,19 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_name"></a>
-<a href="#_endpoint_path_option_name" class="anchor"></a><strong>name</strong> (common)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_projectId"></a>
+<a href="#_endpoint_path_option_projectId" class="anchor"></a><strong>projectId</strong> (common)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Required</strong> Name of endpoint to lookup in the registry.</p>
+<p><strong>Required</strong> Google Cloud Project Id.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_queryString"></a>
+<a href="#_endpoint_path_option_queryString" class="anchor"></a><strong>queryString</strong> (common)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Required</strong> BigQuery standard SQL query.</p>
 </div></div></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
@@ -859,7 +963,7 @@ In other words placeholders allows to externalize the configuration from your co
 </table>
 </div>
 <div class="sect2">
-<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (4 parameters)</h3>
+<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (3 parameters)</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -877,47 +981,13 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_bridgeErrorHandler"></a>
-<a href="#_endpoint_query_option_bridgeErrorHandler" class="anchor"></a><strong>bridgeErrorHandler</strong> (consumer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_connectionFactory"></a>
+<a href="#_endpoint_query_option_connectionFactory" class="anchor"></a><strong>connectionFactory</strong> (producer)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Allows for bridging the consumer to the Camel routing Error Handler, which mean any exceptions occurred while the consumer is trying to pickup incoming messages, or the likes, will now be processed as a message and handled by the routing Error Handler. By default the consumer will use the org.apache.camel.spi.ExceptionHandler to deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_exceptionHandler"></a>
-<a href="#_endpoint_query_option_exceptionHandler" class="anchor"></a><strong>exceptionHandler</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>To let the consumer use a custom ExceptionHandler. Notice if the option bridgeErrorHandler is enabled then this option is not in use. By default the consumer will deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
+<p><strong>Autowired</strong> ConnectionFactory to obtain connection to Bigquery Service. If not provided the default one will be used.</p>
 </div></div></td>
 <td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExceptionHandler</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_exchangePattern"></a>
-<a href="#_endpoint_query_option_exchangePattern" class="anchor"></a><strong>exchangePattern</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Sets the exchange pattern when the consumer creates an exchange.</p>
-</div>
-<div class="paragraph">
-<p>Enum values:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>InOnly</p>
-</li>
-<li>
-<p>InOut</p>
-</li>
-<li>
-<p>InOptionalOut</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExchangePattern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GoogleBigQueryConnectionFactory</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_lazyStartProducer"></a>
@@ -928,72 +998,71 @@ In other words placeholders allows to externalize the configuration from your co
 <td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_serviceAccountKey"></a>
+<a href="#_endpoint_query_option_serviceAccountKey" class="anchor"></a><strong>serviceAccountKey</strong> (security)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Service account key in json format to authenticate an application as a service account to google cloud platform.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_runtime_lookup"><a class="anchor" href="#_runtime_lookup"></a>Runtime lookup</h2>
+<h2 id="_message_headers"><a class="anchor" href="#_message_headers"></a>Message Headers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This component can be used when you need dynamic discovery of endpoints
-in the Registry where you can compute the URI at
-runtime. Then you can look up the endpoint using the following code:</p>
+<p>The Google BigQuery Standard SQL component supports 2 message header(s), which is/are listed below:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// lookup the endpoint
-String myEndpointRef = "bigspenderOrder";
-Endpoint endpoint = context.getEndpoint("ref:" + myEndpointRef);
-
-Producer producer = endpoint.createProducer();
-Exchange exchange = producer.createExchange();
-exchange.getIn().setBody(payloadToSend);
-// send the exchange
-producer.process(exchange);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>With Spring XML, you could have a list of endpoints defined in the
-Registry such as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">&lt;camelContext id="camel" xmlns="http://activemq.apache.org/camel/schema/spring"&gt;
-    &lt;endpoint id="normalOrder" uri="activemq:order.slow"/&gt;
-    &lt;endpoint id="bigspenderOrder" uri="activemq:order.high"/&gt;
-&lt;/camelContext&gt;</code></pre>
-</div>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 50%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_header_CamelGoogleBigQueryTranslatedQuery"></a>
+<a href="#_endpoint_header_CamelGoogleBigQueryTranslatedQuery" class="anchor"></a><strong>CamelGoogleBigQueryTranslatedQuery</strong> (producer)</p>
+<p class="tableblock">Constant: <a href="https://javadoc.io/doc/org.apache.camel/camel-google-bigquery/latest/org/apache/camel/component/google/bigquery/GoogleBigQueryConstants.html#TRANSLATED_QUERY"><code>TRANSLATED_QUERY</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Preprocessed query text.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_header_CamelGoogleBigQueryJobId"></a>
+<a href="#_endpoint_header_CamelGoogleBigQueryJobId" class="anchor"></a><strong>CamelGoogleBigQueryJobId</strong> (producer)</p>
+<p class="tableblock">Constant: <a href="https://javadoc.io/doc/org.apache.camel/camel-google-bigquery/latest/org/apache/camel/component/google/bigquery/GoogleBigQueryConstants.html#JOB_ID"><code>JOB_ID</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A custom JobId to use.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JobId</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sample"><a class="anchor" href="#_sample"></a>Sample</h2>
+<h2 id="_producer_endpoints"><a class="anchor" href="#_producer_endpoints"></a>Producer Endpoints</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Bind endpoints to the Camel registry:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">context.getRegistry().bind("endpoint1", context.getEndpoint("direct:start"));
-context.getRegistry().bind("endpoint2", context.getEndpoint("log:end"));</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Use the <code>ref</code> URI scheme to refer to endpoints bond to the Camel registry:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyRefRoutes extends RouteBuilder {
-    @Override
-    public void configure() {
-        // direct:start -&gt; log:end
-        from("ref:endpoint1")
-            .to("ref:endpoint2");
-    }
-}</code></pre>
-</div>
+<p>Google BigQuery SQL endpoint expects the payload to be either empty or a map of query parameters.</p>
 </div>
 </div>
 </div>
