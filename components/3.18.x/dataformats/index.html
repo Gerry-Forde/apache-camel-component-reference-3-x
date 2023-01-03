@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Data Formats :: Red Hat Integration</title>
-    <meta name="generator" content="Antora 3.0.3">
+    <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
   </head>
@@ -94,6 +94,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../cxf-component.html">CXF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../dataformat-component.html">Data Format</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../dataset-component.html">Dataset</a>
@@ -272,6 +275,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="soap-dataformat.html">SOAP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="zipDeflater-dataformat.html">Zip Deflater</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="zipFile-dataformat.html">Zip File</a>
@@ -668,7 +674,7 @@
     <li><a href="index.html">Data Formats</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///home/gforde/mygit/ACCR-3-18-3/camel/docs/components/modules/dataformats/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///home/gforde/data/ACCR/3.18.x/camel/docs/components/modules/dataformats/pages/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -680,7 +686,7 @@
 <p>Below is the list of data formats that are provided by Apache Camel.</p>
 </div>
 <div class="paragraph">
-<p>Number of Data Formats: 9 in 8 JAR artifacts (0 deprecated)</p>
+<p>Number of Data Formats: 10 in 9 JAR artifacts (0 deprecated)</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -755,6 +761,13 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marshal Java objects to SOAP messages and back.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="zipDeflater-dataformat.html" class="xref page">Zip Deflater</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-zip-deflater</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compress and decompress streams using java.util.zip.Deflater and java.util.zip.Inflater.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="zipFile-dataformat.html" class="xref page">Zip File</a></p></td>
