@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Scheduler :: Red Hat Integration</title>
-    <meta name="description" content="Generate messages in specified intervals using java.util.concurrent.ScheduledExecutorService.">
+    <title>REST OpenApi :: Red Hat Integration</title>
+    <meta name="description" content="Configure REST producers based on an OpenAPI specification document delegating to a component implementing the RestProducerFactory interface.">
     <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -204,13 +204,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="rest-component.html">REST</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="rest-openapi-component.html">REST OpenApi</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="salesforce-component.html">Salesforce</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="scheduler-component.html">Scheduler</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -670,34 +670,60 @@
   <ul>
     <li><a href="index.html">Camel Components</a></li>
     <li><a href="index.html">Components</a></li>
-    <li><a href="scheduler-component.html">Scheduler</a></li>
+    <li><a href="rest-openapi-component.html">REST OpenApi</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///home/gforde/data/ACCR/3.18.x/camel/docs/components/modules/ROOT/pages/scheduler-component.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///home/gforde/data/ACCR/3.18.x/camel/docs/components/modules/ROOT/pages/rest-openapi-component.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Scheduler</h1>
+<h1 class="page">REST OpenApi</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Since Camel 2.15</strong></p>
+<p><strong>Since Camel 3.1</strong></p>
 </div>
 <div class="paragraph">
-<p><strong>Only consumer is supported</strong></p>
+<p><strong>Only producer is supported</strong></p>
 </div>
 <div class="paragraph">
-<p>The Scheduler component is used to generate message exchanges when a
-scheduler fires. This component is similar to the
- <a href="timer-component.html" class="xref page">Timer</a> component, but it offers more functionality in
-terms of scheduling. Also, this component uses
-JDK <code>ScheduledExecutorService</code>, whereas the timer uses a JDK <code>Timer</code>.</p>
+<p>The REST OpenApi* configures rest producers from
+<a href="https://www.openapis.org/">OpenApi</a> (Open API) specification document and
+delegates to a component implementing the <em>RestProducerFactory</em>
+interface. Currently known working components are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http-component.html" class="xref page">http</a></p>
+</li>
+<li>
+<p><a href="#netty-http-component.adoc" class="xref unresolved">netty-http</a></p>
+</li>
+<li>
+<p><a href="#undertow-component.adoc" class="xref unresolved">undertow</a></p>
+</li>
+<li>
+<p><a href="#vertx-http-component.adoc" class="xref unresolved">vertx-http</a></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>You can only consume events from this endpoint.</p>
+<p>Maven users will need to add the following dependency to their
+<code>pom.xml</code> for this component:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.camel&lt;/groupId&gt;
+    &lt;artifactId&gt;camel-rest-openapi&lt;/artifactId&gt;
+    &lt;version&gt;x.x.x&lt;/version&gt;
+    &lt;!-- use the same version as your Camel core version --&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -706,18 +732,72 @@ JDK <code>ScheduledExecutorService</code>, whereas the timer uses a JDK <code>Ti
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre>scheduler:name[?options]</pre>
+<pre>rest-openapi:[specificationPath#]operationId</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Where <code>name</code> is the name of the scheduler, which is created and shared
-across endpoints. So if you use the same name for all your scheduler
-endpoints, only one scheduler thread pool and thread will be used - but
-you can configure the thread pool to allow more concurrent threads.</p>
+<p>Where <code>operationId</code> is the ID of the operation in the OpenApi
+specification, and <code>specificationPath</code> is the path to the
+specification.
+If the <code>specificationPath</code> is not specified it defaults to
+<code>openapi.json</code>. The lookup mechanism uses Camels <code>ResourceHelper</code> to
+load the resource, which means that you can use CLASSPATH resources
+(<code>classpath:my-specification.json</code>), files
+(<code>file:/some/path.json</code>), the web
+(<code>http://api.example.com/openapi.json</code>) or reference a bean
+(<code>ref:nameOfBean</code>) or use a method of a bean
+(<code>bean:nameOfBean.methodName</code>) to get the specification resource,
+failing that OpenApi&#8217;s own resource loading support.</p>
 </div>
 <div class="paragraph">
-<p><strong>Note:</strong> The IN body of the generated exchange is <code>null</code>. So
-<code>exchange.getIn().getBody()</code> returns <code>null</code>.</p>
+<p>This component does not act as a HTTP client, it delegates that to
+another component mentioned above. The lookup mechanism searches for a
+single component that implements the <em>RestProducerFactory</em> interface and
+uses that. If the CLASSPATH contains more than one, then the property
+<code>componentName</code> should be set to indicate which component to delegate
+to.</p>
+</div>
+<div class="paragraph">
+<p>Most of the configuration is taken from the OpenApi specification but
+the option exists to override those by specifying them on the component
+or on the endpoint. Typically you would just need to override the
+<code>host</code> or <code>basePath</code> if those differ from the specification.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>host</code> parameter should contain the absolute URI containing
+scheme, hostname and port number, for instance:
+<code>https://api.example.com</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With <code>componentName</code> you specify what component is used to perform the
+requests, this named component needs to be present in the Camel context
+and implement the required <em>RestProducerFactory</em> interface&#8201;&#8212;&#8201;as do the
+components listed at the top.</p>
+</div>
+<div class="paragraph">
+<p>If you do not specify the <em>componentName</em> at either component or
+endpoint level, CLASSPATH is searched for a suitable delegate. There
+should be only one component present on the CLASSPATH that implements
+the <em>RestProducerFactory</em> interface for this to work.</p>
+</div>
+<div class="paragraph">
+<p>This component&#8217;s endpoint URI is lenient which means that in addition
+to message headers you can specify REST operation&#8217;s parameters as
+endpoint parameters, these will be constant for all subsequent
+invocations so it makes sense to use this feature only for parameters
+that are indeed constant for all invocations&#8201;&#8212;&#8201;for example API version
+in path such as <code>/api/{version}/users/{id}</code>.</p>
 </div>
 </div>
 </div>
@@ -778,7 +858,7 @@ In other words placeholders allows to externalize the configuration from your co
 <h2 id="_component_options"><a class="anchor" href="#_component_options"></a>Component Options</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Scheduler component supports 3 options, which are listed below.</p>
+<p>The REST OpenApi component supports 10 options, which are listed below.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -797,13 +877,67 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_bridgeErrorHandler"></a>
-<a href="#_component_option_bridgeErrorHandler" class="anchor"></a><strong>bridgeErrorHandler</strong> (consumer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_basePath"></a>
+<a href="#_component_option_basePath" class="anchor"></a><strong>basePath</strong> (producer)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Allows for bridging the consumer to the Camel routing Error Handler, which mean any exceptions occurred while the consumer is trying to pickup incoming messages, or the likes, will now be processed as a message and handled by the routing Error Handler. By default the consumer will use the org.apache.camel.spi.ExceptionHandler to deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
+<p>API basePath, for example /v2. Default is unset, if set overrides the value present in OpenApi specification.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_componentName"></a>
+<a href="#_component_option_componentName" class="anchor"></a><strong>componentName</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Name of the Camel component that will perform the requests. The component must be present in Camel registry and it must implement RestProducerFactory service provider interface. If not set CLASSPATH is searched for single component that implements RestProducerFactory SPI. Can be overridden in endpoint configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_consumes"></a>
+<a href="#_component_option_consumes" class="anchor"></a><strong>consumes</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>What payload type this component capable of consuming. Could be one type, like application/json or multiple types as application/json, application/xml; q=0.5 according to the RFC7231. This equates to the value of Accept HTTP header. If set overrides any value found in the OpenApi specification. Can be overridden in endpoint configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_host"></a>
+<a href="#_component_option_host" class="anchor"></a><strong>host</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Scheme hostname and port to direct the HTTP requests to in the form of <a href="https://hostname:port" class="bare">https://hostname:port</a>. Can be configured at the endpoint, component or in the corresponding REST configuration in the Camel Context. If you give this component a name (e.g. petstore) that REST configuration is consulted first, rest-openapi next, and global configuration last. If set overrides any value found in the OpenApi specification, RestConfiguration. Can be overridden in endpoint configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_lazyStartProducer"></a>
+<a href="#_component_option_lazyStartProducer" class="anchor"></a><strong>lazyStartProducer</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Whether the producer should be started lazy (on the first message). By starting lazy you can use this to allow CamelContext and routes to startup in situations where a producer may otherwise fail during starting and cause the route to fail being started. By deferring this startup to be lazy then the startup failure can be handled during routing messages via Camel&#8217;s routing error handlers. Beware that when the first message is processed then creating and starting the producer may take a little time and prolong the total processing time of the processing.</p>
 </div></div></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_produces"></a>
+<a href="#_component_option_produces" class="anchor"></a><strong>produces</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>What payload type this component is producing. For example application/json according to the RFC7231. This equates to the value of Content-Type HTTP header. If set overrides any value present in the OpenApi specification. Can be overridden in endpoint configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_specificationUri"></a>
+<a href="#_component_option_specificationUri" class="anchor"></a><strong>specificationUri</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Path to the OpenApi specification file. The scheme, host base path are taken from this specification, but these can be overridden with properties on the component or endpoint level. If not given the component tries to load openapi.json resource. Note that the host defined on the component and endpoint of this Component should contain the scheme, hostname and optionally the port in the URI syntax (i.e. <a href="https://api.example.com:8080" class="bare">https://api.example.com:8080</a>). Can be overridden in endpoint configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">openapi.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URI</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_autowiredEnabled"></a>
@@ -815,13 +949,22 @@ In other words placeholders allows to externalize the configuration from your co
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_poolSize"></a>
-<a href="#_component_option_poolSize" class="anchor"></a><strong>poolSize</strong> (scheduler)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_sslContextParameters"></a>
+<a href="#_component_option_sslContextParameters" class="anchor"></a><strong>sslContextParameters</strong> (security)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Number of core threads in the thread pool used by the scheduling thread pool. Is by default using a single thread.</p>
+<p>Customize TLS parameters used by the component. If not set defaults to the TLS parameters set in the Camel context.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSLContextParameters</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_useGlobalSslContextParameters"></a>
+<a href="#_component_option_useGlobalSslContextParameters" class="anchor"></a><strong>useGlobalSslContextParameters</strong> (security)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable usage of global SSL context parameters.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
 </tbody>
 </table>
@@ -831,18 +974,18 @@ In other words placeholders allows to externalize the configuration from your co
 <h2 id="_endpoint_options"><a class="anchor" href="#_endpoint_options"></a>Endpoint Options</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Scheduler endpoint is configured using URI syntax:</p>
+<p>The REST OpenApi endpoint is configured using URI syntax:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>scheduler:name</pre>
+<pre>rest-openapi:specificationUri#operationId</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>with the following path and query parameters:</p>
 </div>
 <div class="sect2">
-<h3 id="_path_parameters_1_parameters"><a class="anchor" href="#_path_parameters_1_parameters"></a>Path Parameters (1 parameters)</h3>
+<h3 id="_path_parameters_2_parameters"><a class="anchor" href="#_path_parameters_2_parameters"></a>Path Parameters (2 parameters)</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -860,10 +1003,19 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_name"></a>
-<a href="#_endpoint_path_option_name" class="anchor"></a><strong>name</strong> (consumer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_specificationUri"></a>
+<a href="#_endpoint_path_option_specificationUri" class="anchor"></a><strong>specificationUri</strong> (producer)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Required</strong> The name of the scheduler.</p>
+<p>Path to the OpenApi specification file. The scheme, host base path are taken from this specification, but these can be overridden with properties on the component or endpoint level. If not given the component tries to load openapi.json resource from the classpath. Note that the host defined on the component and endpoint of this Component should contain the scheme, hostname and optionally the port in the URI syntax (i.e. <a href="http://api.example.com:8080" class="bare">http://api.example.com:8080</a>). Overrides component configuration. The OpenApi specification can be loaded from different sources by prefixing with file: classpath: http: https:. Support for https is limited to using the JDK installed UrlHandler, and as such it can be cumbersome to setup TLS/SSL certificates for https (such as setting a number of javax.net.ssl JVM system properties). How to do that consult the JDK documentation for UrlHandler. Default value notice: By default loads openapi.json file.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">openapi.json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_path_option_operationId"></a>
+<a href="#_endpoint_path_option_operationId" class="anchor"></a><strong>operationId</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Required</strong> ID of the operation from the OpenApi specification.</p>
 </div></div></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
@@ -872,7 +1024,7 @@ In other words placeholders allows to externalize the configuration from your co
 </table>
 </div>
 <div class="sect2">
-<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (21 parameters)</h3>
+<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (6 parameters)</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -890,261 +1042,57 @@ In other words placeholders allows to externalize the configuration from your co
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_sendEmptyMessageWhenIdle"></a>
-<a href="#_endpoint_query_option_sendEmptyMessageWhenIdle" class="anchor"></a><strong>sendEmptyMessageWhenIdle</strong> (consumer)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_basePath"></a>
+<a href="#_endpoint_query_option_basePath" class="anchor"></a><strong>basePath</strong> (producer)</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If the polling consumer did not poll any files, you can enable this option to send an empty message (no body) instead.</p>
+<p>API basePath, for example /v2. Default is unset, if set overrides the value present in OpenApi specification and in the component configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_componentName"></a>
+<a href="#_endpoint_query_option_componentName" class="anchor"></a><strong>componentName</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Name of the Camel component that will perform the requests. The component must be present in Camel registry and it must implement RestProducerFactory service provider interface. If not set CLASSPATH is searched for single component that implements RestProducerFactory SPI. Overrides component configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_consumes"></a>
+<a href="#_endpoint_query_option_consumes" class="anchor"></a><strong>consumes</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>What payload type this component capable of consuming. Could be one type, like application/json or multiple types as application/json, application/xml; q=0.5 according to the RFC7231. This equates to the value of Accept HTTP header. If set overrides any value found in the OpenApi specification and. in the component configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_host"></a>
+<a href="#_endpoint_query_option_host" class="anchor"></a><strong>host</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Scheme hostname and port to direct the HTTP requests to in the form of <a href="https://hostname:port" class="bare">https://hostname:port</a>. Can be configured at the endpoint, component or in the corresponding REST configuration in the Camel Context. If you give this component a name (e.g. petstore) that REST configuration is consulted first, rest-openapi next, and global configuration last. If set overrides any value found in the OpenApi specification, RestConfiguration. Overrides all other configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_produces"></a>
+<a href="#_endpoint_query_option_produces" class="anchor"></a><strong>produces</strong> (producer)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>What payload type this component is producing. For example application/json according to the RFC7231. This equates to the value of Content-Type HTTP header. If set overrides any value present in the OpenApi specification. Overrides all other configuration.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_lazyStartProducer"></a>
+<a href="#_endpoint_query_option_lazyStartProducer" class="anchor"></a><strong>lazyStartProducer</strong> (producer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Whether the producer should be started lazy (on the first message). By starting lazy you can use this to allow CamelContext and routes to startup in situations where a producer may otherwise fail during starting and cause the route to fail being started. By deferring this startup to be lazy then the startup failure can be handled during routing messages via Camel&#8217;s routing error handlers. Beware that when the first message is processed then creating and starting the producer may take a little time and prolong the total processing time of the processing.</p>
 </div></div></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_bridgeErrorHandler"></a>
-<a href="#_endpoint_query_option_bridgeErrorHandler" class="anchor"></a><strong>bridgeErrorHandler</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Allows for bridging the consumer to the Camel routing Error Handler, which mean any exceptions occurred while the consumer is trying to pickup incoming messages, or the likes, will now be processed as a message and handled by the routing Error Handler. By default the consumer will use the org.apache.camel.spi.ExceptionHandler to deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_exceptionHandler"></a>
-<a href="#_endpoint_query_option_exceptionHandler" class="anchor"></a><strong>exceptionHandler</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>To let the consumer use a custom ExceptionHandler. Notice if the option bridgeErrorHandler is enabled then this option is not in use. By default the consumer will deal with exceptions, that will be logged at WARN or ERROR level and ignored.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExceptionHandler</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_exchangePattern"></a>
-<a href="#_endpoint_query_option_exchangePattern" class="anchor"></a><strong>exchangePattern</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Sets the exchange pattern when the consumer creates an exchange.</p>
-</div>
-<div class="paragraph">
-<p>Enum values:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>InOnly</p>
-</li>
-<li>
-<p>InOut</p>
-</li>
-<li>
-<p>InOptionalOut</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExchangePattern</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_pollStrategy"></a>
-<a href="#_endpoint_query_option_pollStrategy" class="anchor"></a><strong>pollStrategy</strong> (consumer (advanced))</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A pluggable org.apache.camel.PollingConsumerPollingStrategy allowing you to provide your custom implementation to control error handling usually occurred during the poll operation before an Exchange have been created and being routed in Camel.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PollingConsumerPollStrategy</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_synchronous"></a>
-<a href="#_endpoint_query_option_synchronous" class="anchor"></a><strong>synchronous</strong> (advanced)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Sets whether synchronous processing should be strictly used.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_backoffErrorThreshold"></a>
-<a href="#_endpoint_query_option_backoffErrorThreshold" class="anchor"></a><strong>backoffErrorThreshold</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The number of subsequent error polls (failed due some error) that should happen before the backoffMultipler should kick-in.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_backoffIdleThreshold"></a>
-<a href="#_endpoint_query_option_backoffIdleThreshold" class="anchor"></a><strong>backoffIdleThreshold</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The number of subsequent idle polls that should happen before the backoffMultipler should kick-in.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_backoffMultiplier"></a>
-<a href="#_endpoint_query_option_backoffMultiplier" class="anchor"></a><strong>backoffMultiplier</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>To let the scheduled polling consumer backoff if there has been a number of subsequent idles/errors in a row. The multiplier is then the number of polls that will be skipped before the next actual attempt is happening again. When this option is in use then backoffIdleThreshold and/or backoffErrorThreshold must also be configured.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_delay"></a>
-<a href="#_endpoint_query_option_delay" class="anchor"></a><strong>delay</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Milliseconds before the next poll.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">500</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_greedy"></a>
-<a href="#_endpoint_query_option_greedy" class="anchor"></a><strong>greedy</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If greedy is enabled, then the ScheduledPollConsumer will run immediately again, if the previous run polled 1 or more messages.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_initialDelay"></a>
-<a href="#_endpoint_query_option_initialDelay" class="anchor"></a><strong>initialDelay</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Milliseconds before the first poll starts.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">1000</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_poolSize"></a>
-<a href="#_endpoint_query_option_poolSize" class="anchor"></a><strong>poolSize</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Number of core threads in the thread pool used by the scheduling thread pool. Is by default using a single thread.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_repeatCount"></a>
-<a href="#_endpoint_query_option_repeatCount" class="anchor"></a><strong>repeatCount</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies a maximum limit of number of fires. So if you set it to 1, the scheduler will only fire once. If you set it to 5, it will only fire five times. A value of zero or negative means fire forever.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_runLoggingLevel"></a>
-<a href="#_endpoint_query_option_runLoggingLevel" class="anchor"></a><strong>runLoggingLevel</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The consumer logs a start/complete log line when it polls. This option allows you to configure the logging level for that.</p>
-</div>
-<div class="paragraph">
-<p>Enum values:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>TRACE</p>
-</li>
-<li>
-<p>DEBUG</p>
-</li>
-<li>
-<p>INFO</p>
-</li>
-<li>
-<p>WARN</p>
-</li>
-<li>
-<p>ERROR</p>
-</li>
-<li>
-<p>OFF</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">TRACE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LoggingLevel</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_scheduledExecutorService"></a>
-<a href="#_endpoint_query_option_scheduledExecutorService" class="anchor"></a><strong>scheduledExecutorService</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Allows for configuring a custom/shared thread pool to use for the consumer. By default each consumer has its own single threaded thread pool.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ScheduledExecutorService</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_scheduler"></a>
-<a href="#_endpoint_query_option_scheduler" class="anchor"></a><strong>scheduler</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>To use a cron scheduler from either camel-spring or camel-quartz component. Use value spring or quartz for built in scheduler.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">none</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_schedulerProperties"></a>
-<a href="#_endpoint_query_option_schedulerProperties" class="anchor"></a><strong>schedulerProperties</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>To configure additional properties when using a custom scheduler or any of the Quartz, Spring based scheduler.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Map</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_startScheduler"></a>
-<a href="#_endpoint_query_option_startScheduler" class="anchor"></a><strong>startScheduler</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Whether the scheduler should be auto started.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_timeUnit"></a>
-<a href="#_endpoint_query_option_timeUnit" class="anchor"></a><strong>timeUnit</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Time unit for initialDelay and delay options.</p>
-</div>
-<div class="paragraph">
-<p>Enum values:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>NANOSECONDS</p>
-</li>
-<li>
-<p>MICROSECONDS</p>
-</li>
-<li>
-<p>MILLISECONDS</p>
-</li>
-<li>
-<p>SECONDS</p>
-</li>
-<li>
-<p>MINUTES</p>
-</li>
-<li>
-<p>HOURS</p>
-</li>
-<li>
-<p>DAYS</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">MILLISECONDS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TimeUnit</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_useFixedDelay"></a>
-<a href="#_endpoint_query_option_useFixedDelay" class="anchor"></a><strong>useFixedDelay</strong> (scheduler)</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Controls if fixed delay or fixed rate is used. See ScheduledExecutorService in JDK for details.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
 </tbody>
@@ -1153,143 +1101,93 @@ In other words placeholders allows to externalize the configuration from your co
 </div>
 </div>
 <div class="sect1">
-<h2 id="_message_headers"><a class="anchor" href="#_message_headers"></a>Message Headers</h2>
+<h2 id="_example_petstore"><a class="anchor" href="#_example_petstore"></a>Example: PetStore</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Scheduler component supports 1 message header(s), which is/are listed below:</p>
+<p>Checkout the <code>rest-openapi-simple</code> example project in
+the <a href="https://github.com/apache/camel-spring-boot-examples" class="bare">https://github.com/apache/camel-spring-boot-examples</a> repository.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 50%;">
-<col style="width: 10%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-center valign-top">Default</th>
-<th class="tableblock halign-left valign-top">Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_header_CamelMessageTimestamp"></a>
-<a href="#_endpoint_header_CamelMessageTimestamp" class="anchor"></a><strong>CamelMessageTimestamp</strong> (consumer)</p>
-<p class="tableblock">Constant: <a href="https://javadoc.io/doc/org.apache.camel/camel-scheduler/latest/org/apache/camel/component/scheduler/SchedulerConstants.html#MESSAGE_TIMESTAMP"><code>MESSAGE_TIMESTAMP</code></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The timestamp of the message.</p>
-</div></div></td>
-<td class="tableblock halign-center valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_more_information"><a class="anchor" href="#_more_information"></a>More information</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>This component is a scheduler
-<a href="http://camel.apache.org/polling-consumer.html">Polling Consumer</a> where
-you can find more information about the options above, and examples at
-the <a href="http://camel.apache.org/polling-consumer.html">Polling
-Consumer</a> page.</p>
+<p>For example if you wanted to use the
+<a href="https://petstore3.swagger.io/api/v3/"><em>PetStore</em></a> provided REST API simply
+reference the specification URI and desired operation id from the
+OpenApi specification or download the specification and store it as
+<code>openapi.json</code> (in the root) of CLASSPATH that way it will be
+automaticaly used. Let&#8217;s use the <a href="http-component.html" class="xref page">HTTP</a>
+component to perform all the requests and Camel&#8217;s excellent support for
+Spring Boot.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_exchange_properties"><a class="anchor" href="#_exchange_properties"></a>Exchange Properties</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>When the timer is fired, it adds the following information as properties
-to the <code>Exchange</code>:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 10%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Exchange.TIMER_NAME</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The value of the <code>name</code> option.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Exchange.TIMER_FIRED_TIME</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Date</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The time when the consumer fired.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_sample"><a class="anchor" href="#_sample"></a>Sample</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To set up a route that generates an event every 60 seconds:</p>
+<p>Here are our dependencies defined in Maven POM file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">from("scheduler://foo?delay=60000").to("bean:myBean?method=someMethodName");</code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.camel.springboot&lt;/groupId&gt;
+  &lt;artifactId&gt;camel-http-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.camel.springboot&lt;/groupId&gt;
+  &lt;artifactId&gt;camel-rest-openapi-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The above route will generate an event and then invoke the
-<code>someMethodName</code> method on the bean called <code>myBean</code> in the
-Registry such as JNDI or Spring.</p>
-</div>
-<div class="paragraph">
-<p>And the route in Spring DSL:</p>
+<p>Start by defining a <em>RestOpenApiComponent</em> bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;route&gt;
-  &lt;from uri="scheduler://foo?delay=60000"/&gt;
-  &lt;to uri="bean:myBean?method=someMethodName"/&gt;
-&lt;/route&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public Component petstore(CamelContext camelContext) {
+    RestOpenApiComponent petstore = new RestOpenApiComponent(camelContext);
+    petstore.setSpecificationUri(new URI("https://petstore3.swagger.io/api/v3/openapi.json"));
+    petstore.setHost("https://petstore3.swagger.io");
+    return petstore;
+}</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_forcing_the_scheduler_to_trigger_immediately_when_completed"><a class="anchor" href="#_forcing_the_scheduler_to_trigger_immediately_when_completed"></a>Forcing the scheduler to trigger immediately when completed</h2>
-<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>To let the scheduler trigger as soon as the previous task is complete,
-you can set the option <code>greedy=true</code>. But beware then the scheduler will
-keep firing all the time. So use this with caution.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_forcing_the_scheduler_to_be_idle"><a class="anchor" href="#_forcing_the_scheduler_to_be_idle"></a>Forcing the scheduler to be idle</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>There can be use cases where you want the scheduler to trigger and be
-greedy. But sometimes you want "tell the scheduler" that there was no
-task to poll, so the scheduler can change into idle mode using the
-backoff options. To do this you would need to set a property on the
-exchange with the key <code>Exchange.SCHEDULER_POLLED_MESSAGES</code> to a boolean
-value of false. This will cause the consumer to indicate that there was
-no messages polled.</p>
+<p>Support in Camel for Spring Boot will auto create the
+<code>HttpComponent</code> Spring bean, and you can configure it using
+<code>application.properties</code> (or <code>application.yml</code>) using prefix
+<code>camel.component.http.</code>. We are defining the <code>petstore</code>
+component here in order to have a named component in the Camel context
+that we can use to interact with the PetStore REST API, if this is the
+only <code>rest-openapi</code> component used we might configure it in the same
+manner (using <code>application.properties</code>).</p>
 </div>
 <div class="paragraph">
-<p>The consumer will otherwise as by default return 1 message polled to the
-scheduler, every time the consumer has completed processing the
-exchange.</p>
+<p>In this example, there is no need to explicitly associate the <code>petstore</code>
+component with the <code>HttpComponent</code> as Camel will use the first class on
+the CLASSPATH that implements <code>RestProducerFactory</code>. However, if a different
+component is required, then calling <code>petstore.setComponentName("http")</code>
+would use the named component from the Camel registry.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now in our application we can simply use the <code>ProducerTemplate</code> to
+invoke PetStore REST methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Autowired
+ProducerTemplate template;
+
+String getPetJsonById(int petId) {
+    return template.requestBodyAndHeader("petstore:getPetById", null, "petId", petId);
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
