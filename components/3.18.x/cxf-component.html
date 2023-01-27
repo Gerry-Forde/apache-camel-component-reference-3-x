@@ -715,7 +715,7 @@ When using CXF in streaming modes (see DataFormat option), then also read about 
 <pre class="highlightjs highlight"><code class="language-highlightjs hljs" data-lang="highlightjs">&lt;dependency&gt;
     &lt;groupId&gt;org.apache.camel&lt;/groupId&gt;
     &lt;artifactId&gt;camel-cxf-soap&lt;/artifactId&gt;
-    &lt;version&gt;{CamelSBVersion}&lt;/version&gt;
+    &lt;version&gt;{CamelVersion}&lt;/version&gt;
     &lt;!-- use the same version as your Camel core version --&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -1546,8 +1546,8 @@ example code:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-highlightjs hljs" data-lang="highlightjs">public class PersonProcessor implements Processor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PersonProcessor.class);
-
+    private static final Logger LOG = Logger.getLogger(PersonProcessor.class);
+    
     @Override
     @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
