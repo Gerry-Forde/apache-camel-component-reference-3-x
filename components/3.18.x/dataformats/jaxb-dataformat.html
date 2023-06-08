@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -730,7 +754,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_contextPathIsClassName" class="paragraph">
 <p><a href="#_dataformat_option_contextPathIsClassName" class="anchor"></a><strong>contextPathIsClassName</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This can be set to true to mark that the contextPath is referring to a classname and not a package name.</p>
@@ -750,7 +774,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_schemaSeverityLevel" class="paragraph">
 <p><a href="#_dataformat_option_schemaSeverityLevel" class="anchor"></a><strong>schemaSeverityLevel</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Enum</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Sets the schema severity level to use when validating against a schema. This level determines the minimum severity error that triggers JAXB to stop continue parsing. The default value of 0 (warning) means that any error (warning, error or fatal error) will trigger JAXB to stop. There are the following three levels: 0=warning, 1=error, 2=fatal error.</p>
@@ -776,7 +800,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_prettyPrint" class="paragraph">
 <p><a href="#_dataformat_option_prettyPrint" class="anchor"></a><strong>prettyPrint</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>To enable pretty printing output nicely formatted. Is by default false.</p>
@@ -786,7 +810,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_objectFactory" class="paragraph">
 <p><a href="#_dataformat_option_objectFactory" class="anchor"></a><strong>objectFactory</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to allow using ObjectFactory classes to create the POJO classes during marshalling. This only applies to POJO classes that has not been annotated with JAXB and providing jaxb.index descriptor files.</p>
@@ -796,7 +820,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_ignoreJAXBElement" class="paragraph">
 <p><a href="#_dataformat_option_ignoreJAXBElement" class="anchor"></a><strong>ignoreJAXBElement</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to ignore JAXBElement elements - only needed to be set to false in very special use-cases.</p>
@@ -806,7 +830,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_mustBeJAXBElement" class="paragraph">
 <p><a href="#_dataformat_option_mustBeJAXBElement" class="anchor"></a><strong>mustBeJAXBElement</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether marhsalling must be java objects with JAXB annotations. And if not then it fails. This option can be set to false to relax that, such as when the data is already in XML format.</p>
@@ -816,7 +840,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_filterNonXmlChars" class="paragraph">
 <p><a href="#_dataformat_option_filterNonXmlChars" class="anchor"></a><strong>filterNonXmlChars</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>To ignore non xml characheters and replace them with an empty space.</p>
@@ -836,7 +860,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_fragment" class="paragraph">
 <p><a href="#_dataformat_option_fragment" class="anchor"></a><strong>fragment</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>To turn on marshalling XML fragment trees. By default JAXB looks for XmlRootElement annotation on given class to operate on whole XML tree. This is useful but not always - sometimes generated code does not have XmlRootElement annotation, sometimes you need unmarshall only part of tree. In that case you can use partial unmarshalling. To enable this behaviours you need set property partClass. Camel will pass this class to JAXB&#8217;s unmarshaler.</p>
@@ -916,7 +940,7 @@ payload.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_contentTypeHeader" class="paragraph">
 <p><a href="#_dataformat_option_contentTypeHeader" class="anchor"></a><strong>contentTypeHeader</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether the data format should set the Content-Type header with the type from the data format. For example application/xml for data formats marshalling to XML, or application/json for data formats marshalling to JSON.</p>

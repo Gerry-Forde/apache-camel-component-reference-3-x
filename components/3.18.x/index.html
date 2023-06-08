@@ -36,6 +36,9 @@
     <a class="nav-link" href="index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -129,6 +132,9 @@
     <a class="nav-link" href="infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -219,6 +225,9 @@
     <a class="nav-link" href="slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -232,6 +241,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="xquery-component.html">XQuery</a>
@@ -337,6 +349,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="others/jta.html">JTA</a>
@@ -838,7 +862,7 @@ services that can not only resolve easy messaging and transferring data but also
 <p>Below is the list of non-core components that are provided by Apache Camel.</p>
 </div>
 <div class="paragraph">
-<p>Number of Non-Core Components: 49 in 46 JAR artifacts (0 deprecated)</p>
+<p>Number of Non-Core Components: 53 in 50 JAR artifacts (0 deprecated)</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -858,6 +882,13 @@ services that can not only resolve easy messaging and transferring data but also
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="amqp-component.html" class="xref page">AMQP</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-amqp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Messaging with AMQP protocol using Apache QPid Client.</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="aws-summary.html" class="xref page">AWS</a></p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -1011,6 +1042,13 @@ services that can not only resolve easy messaging and transferring data but also
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.13</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read and write from/to Infinispan distributed key/value store and data grid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="jdbc-component.html" class="xref page">JDBC</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-jdbc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access databases through SQL and JDBC.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="jira-component.html" class="xref page">Jira</a></p></td>
@@ -1174,6 +1212,13 @@ services that can not only resolve easy messaging and transferring data but also
 <td class="tableblock halign-left valign-top"><p class="tableblock">Send and receive messages to/from Slack.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="snmp-component.html" class="xref page">SNMP</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-snmp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Receive traps and poll SNMP (Simple Network Management Protocol) capable devices.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="sql-component.html" class="xref page">SQL</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">camel-sql</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
@@ -1193,6 +1238,13 @@ services that can not only resolve easy messaging and transferring data but also
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Transform messages using a Velocity template.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="vertx-http-component.html" class="xref page">Vert.x HTTP Client</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-vertx-http</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Send requests to external HTTP servers using Vert.x</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="xquery-component.html" class="xref page">XQuery</a></p></td>

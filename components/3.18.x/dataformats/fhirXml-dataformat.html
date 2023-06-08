@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -719,7 +743,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_fhirVersion" class="paragraph">
 <p><a href="#_dataformat_option_fhirVersion" class="anchor"></a><strong>fhirVersion</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>R4</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Enum</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The version of FHIR to use. Possible values are: DSTU2,DSTU2_HL7ORG,DSTU2_1,DSTU3,R4,R5.</p>
@@ -754,7 +778,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_prettyPrint" class="paragraph">
 <p><a href="#_dataformat_option_prettyPrint" class="anchor"></a><strong>prettyPrint</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Sets the pretty print flag, meaning that the parser will encode resources with human-readable spacing and newlines between elements instead of condensing output as much as possible.</p>
@@ -774,7 +798,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_omitResourceId" class="paragraph">
 <p><a href="#_dataformat_option_omitResourceId" class="anchor"></a><strong>omitResourceId</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (default is false) the ID of any resources being encoded will not be included in the output. Note that this does not apply to contained resources, only to root resources. In other words, if this is set to true, contained resources will still have local IDs but the outer/containing ID will not have an ID.</p>
@@ -784,7 +808,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_encodeElementsAppliesToChildResourcesOnly" class="paragraph">
 <p><a href="#_dataformat_option_encodeElementsAppliesToChildResourcesOnly" class="anchor"></a><strong>encodeElementsAppliesToChildResourcesOnly</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (default is false), the values supplied to setEncodeElements(Set) will not be applied to the root resource (typically a Bundle), but will be applied to any sub-resources contained within it (i.e. search result resources in that bundle).</p>
@@ -814,7 +838,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_stripVersionsFromReferences" class="paragraph">
 <p><a href="#_dataformat_option_stripVersionsFromReferences" class="anchor"></a><strong>stripVersionsFromReferences</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (which is the default), resource references containing a version will have the version removed when the resource is encoded. This is generally good behaviour because in most situations, references from one resource to another should be to the resource by ID, not by ID and version. In some cases though, it may be desirable to preserve the version in resource links. In that case, this value should be set to false. This method provides the ability to globally disable reference encoding. If finer-grained control is needed, use setDontStripVersionsFromReferencesAtPaths(List).</p>
@@ -824,7 +848,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_overrideResourceIdWithBundleEntryFullUrl" class="paragraph">
 <p><a href="#_dataformat_option_overrideResourceIdWithBundleEntryFullUrl" class="anchor"></a><strong>overrideResourceIdWithBundleEntryFullUrl</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (which is the default), the Bundle.entry.fullUrl will override the Bundle.entry.resource&#8217;s resource id if the fullUrl is defined. This behavior happens when parsing the source data into a Bundle object. Set this to false if this is not the desired behavior (e.g. the client code wishes to perform additional validation checks between the fullUrl and the resource id).</p>
@@ -834,7 +858,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_summaryMode" class="paragraph">
 <p><a href="#_dataformat_option_summaryMode" class="anchor"></a><strong>summaryMode</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (default is false) only elements marked by the FHIR specification as being summary elements will be included.</p>
@@ -844,7 +868,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_suppressNarratives" class="paragraph">
 <p><a href="#_dataformat_option_suppressNarratives" class="anchor"></a><strong>suppressNarratives</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true (default is false), narratives will not be included in the encoded values.</p>
@@ -864,7 +888,7 @@ XML parser to parse to/from XML format to/from a HAPI-FHIR&#8217;s <code>IBaseRe
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_contentTypeHeader" class="paragraph">
 <p><a href="#_dataformat_option_contentTypeHeader" class="anchor"></a><strong>contentTypeHeader</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether the data format should set the Content-Type header with the type from the data format. For example application/xml for data formats marshalling to XML, or application/json for data formats marshalling to JSON.</p>

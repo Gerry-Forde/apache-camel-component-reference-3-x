@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -728,7 +752,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_suppressExceptions" class="paragraph">
 <p><a href="#_language_option_suppressExceptions" class="anchor"></a><strong>suppressExceptions</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to suppress exceptions such as PathNotFoundException.</p>
@@ -738,7 +762,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_allowSimple" class="paragraph">
 <p><a href="#_language_option_allowSimple" class="anchor"></a><strong>allowSimple</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to allow in inlined Simple exceptions in the JSONPath expression.</p>
@@ -748,7 +772,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_allowEasyPredicate" class="paragraph">
 <p><a href="#_language_option_allowEasyPredicate" class="anchor"></a><strong>allowEasyPredicate</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to allow using the easy predicate parser to pre-parse predicates.</p>
@@ -758,7 +782,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_writeAsString" class="paragraph">
 <p><a href="#_language_option_writeAsString" class="anchor"></a><strong>writeAsString</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to write the output of each row/element as a JSON String value instead of a Map/POJO value.</p>
@@ -768,7 +792,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_unpackArray" class="paragraph">
 <p><a href="#_language_option_unpackArray" class="anchor"></a><strong>unpackArray</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to unpack a single element json-array into an object.</p>
@@ -820,7 +844,7 @@ using <a href="../../../manual/expression.html" class="xref page">Expression</a>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_language_option_trim" class="paragraph">
 <p><a href="#_language_option_trim" class="anchor"></a><strong>trim</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to trim the value to remove leading and trailing whitespaces and line breaks.</p>

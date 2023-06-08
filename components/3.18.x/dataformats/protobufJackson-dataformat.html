@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -766,7 +790,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_useDefaultObjectMapper" class="paragraph">
 <p><a href="#_dataformat_option_useDefaultObjectMapper" class="anchor"></a><strong>useDefaultObjectMapper</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether to lookup and use default Jackson ObjectMapper from the registry.</p>
@@ -776,7 +800,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_autoDiscoverObjectMapper" class="paragraph">
 <p><a href="#_dataformat_option_autoDiscoverObjectMapper" class="anchor"></a><strong>autoDiscoverObjectMapper</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If set to true then Jackson will lookup for an objectMapper into the registry.</p>
@@ -816,7 +840,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_allowJmsType" class="paragraph">
 <p><a href="#_dataformat_option_allowJmsType" class="anchor"></a><strong>allowJmsType</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Used for JMS users to allow the JMSType header from the JMS spec to specify a FQN classname to use to unmarshal to.</p>
@@ -836,7 +860,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_useList" class="paragraph">
 <p><a href="#_dataformat_option_useList" class="anchor"></a><strong>useList</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>To unmarshal to a List of Map or a List of Pojo.</p>
@@ -886,7 +910,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_allowUnmarshallType" class="paragraph">
 <p><a href="#_dataformat_option_allowUnmarshallType" class="anchor"></a><strong>allowUnmarshallType</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If enabled then Jackson is allowed to attempt to use the CamelJacksonUnmarshalType header during the unmarshalling. This should only be enabled when desired to be used.</p>
@@ -916,7 +940,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_autoDiscoverSchemaResolver" class="paragraph">
 <p><a href="#_dataformat_option_autoDiscoverSchemaResolver" class="anchor"></a><strong>autoDiscoverSchemaResolver</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>When not disabled, the SchemaResolver will be looked up into the registry.</p>
@@ -926,7 +950,7 @@ Or you can explicitly specify the reference to a custom SchemaResolver.</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="_dataformat_option_contentTypeHeader" class="paragraph">
 <p><a href="#_dataformat_option_contentTypeHeader" class="anchor"></a><strong>contentTypeHeader</strong></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether the data format should set the Content-Type header with the type from the data format. For example application/xml for data formats marshalling to XML, or application/json for data formats marshalling to JSON.</p>
