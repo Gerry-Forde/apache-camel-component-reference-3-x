@@ -36,6 +36,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -129,6 +132,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -219,6 +225,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -232,6 +241,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -337,6 +349,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jta.html">JTA</a>
@@ -685,7 +709,7 @@ provides various references that offers services for messaging, sending data, no
 services that can not only resolve easy messaging and transferring data but also provide securing of data.</p>
 </div>
 <div class="paragraph">
-<p>Number of Miscellaneous Components: 6 in 6 JAR artifacts (0 deprecated)</p>
+<p>Number of Miscellaneous Components: 9 in 9 JAR artifacts (0 deprecated)</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -711,6 +735,13 @@ services that can not only resolve easy messaging and transferring data but also
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for attachments on Camel messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dsl.html" class="xref page">DSL</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="jta.html" class="xref page">JTA</a></p></td>
@@ -746,6 +777,20 @@ services that can not only resolve easy messaging and transferring data but also
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Distributed tracing using OpenTelemetry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="java-xml-io-dsl.html" class="xref page">XML Io Dsl</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-xml-io-dsl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Camel DSL with XML</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="yaml-dsl.html" class="xref page">YAML DSL</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">camel-yaml-dsl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Camel DSL with YAML</p></td>
 </tr>
 </tbody>
 </table>

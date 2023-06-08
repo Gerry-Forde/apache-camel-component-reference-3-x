@@ -37,6 +37,9 @@
     <a class="nav-link" href="index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="others/jta.html">JTA</a>
@@ -798,7 +822,7 @@ In other words placeholders allows to externalize the configuration from your co
 <h2 id="_component_options"><a class="anchor" href="#_component_options"></a>Component Options</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Netty component supports 73 options, which are listed below.</p>
+<p>The Netty component supports 75 options, which are listed below.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1171,6 +1195,15 @@ In other words placeholders allows to externalize the configuration from your co
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_producerPoolBlockWhenExhausted"></a>
+<a href="#_component_option_producerPoolBlockWhenExhausted" class="anchor"></a><strong>producerPoolBlockWhenExhausted</strong> (producer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the value for the blockWhenExhausted configuration attribute. It determines whether to block when the borrowObject() method is invoked when the pool is exhausted (the maximum number of active objects has been reached).</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_producerPoolEnabled"></a>
 <a href="#_component_option_producerPoolEnabled" class="anchor"></a><strong>producerPoolEnabled</strong> (producer (advanced))</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -1196,6 +1229,15 @@ In other words placeholders allows to externalize the configuration from your co
 </div></div></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_producerPoolMaxWait"></a>
+<a href="#_component_option_producerPoolMaxWait" class="anchor"></a><strong>producerPoolMaxWait</strong> (producer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the maximum duration (value in millis) the borrowObject() method should block before throwing an exception when the pool is exhausted and producerPoolBlockWhenExhausted is true. When less than 0, the borrowObject() method may block indefinitely.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_component_option_producerPoolMinEvictableIdle"></a>
@@ -1641,7 +1683,7 @@ In other words placeholders allows to externalize the configuration from your co
 </table>
 </div>
 <div class="sect2">
-<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (71 parameters)</h3>
+<h3 id="_query_parameters"><a class="anchor" href="#_query_parameters"></a>Query Parameters (73 parameters)</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -2020,6 +2062,15 @@ In other words placeholders allows to externalize the configuration from your co
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_producerPoolBlockWhenExhausted"></a>
+<a href="#_endpoint_query_option_producerPoolBlockWhenExhausted" class="anchor"></a><strong>producerPoolBlockWhenExhausted</strong> (producer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the value for the blockWhenExhausted configuration attribute. It determines whether to block when the borrowObject() method is invoked when the pool is exhausted (the maximum number of active objects has been reached).</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_producerPoolEnabled"></a>
 <a href="#_endpoint_query_option_producerPoolEnabled" class="anchor"></a><strong>producerPoolEnabled</strong> (producer (advanced))</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -2045,6 +2096,15 @@ In other words placeholders allows to externalize the configuration from your co
 </div></div></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_producerPoolMaxWait"></a>
+<a href="#_endpoint_query_option_producerPoolMaxWait" class="anchor"></a><strong>producerPoolMaxWait</strong> (producer (advanced))</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the maximum duration (value in millis) the borrowObject() method should block before throwing an exception when the pool is exhausted and producerPoolBlockWhenExhausted is true. When less than 0, the borrowObject() method may block indefinitely.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="_endpoint_query_option_producerPoolMinEvictableIdle"></a>

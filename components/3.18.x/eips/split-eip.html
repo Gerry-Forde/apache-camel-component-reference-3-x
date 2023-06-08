@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -758,7 +782,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If this option is false then the aggregate method is not used if there was no data to enrich. If this option is true then null values is used as the oldExchange (when no data to enrich), when using POJOs as the AggregationStrategy.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -766,7 +790,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If enabled then the aggregate method on AggregationStrategy can be called concurrently. Notice that this would require the implementation of AggregationStrategy to be implemented as thread-safe. By default this is false meaning that Camel synchronizes the call to the aggregate method. Though in some use-cases this can be used to archive higher performance when the AggregationStrategy is implemented as thread-safe.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -774,7 +798,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If enabled then processing each split messages occurs concurrently. Note the caller thread will still wait until all messages has been fully processed, before it continues. It&#8217;s only processing the sub messages from the splitter which happens concurrently.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -782,7 +806,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>When in streaming mode, then the splitter splits the original message on-demand, and each split message is processed one by one. This reduces memory usage as the splitter do not split all the messages first, but then we do not know the total size, and therefore the org.apache.camel.Exchange#SPLIT_SIZE is empty. In non-streaming mode (default) the splitter will split each message first, to know the total size, and then process each message one by one. This requires to keep all the split messages in memory and therefore requires more memory. The total size is provided in the org.apache.camel.Exchange#SPLIT_SIZE header. The streaming mode also affects the aggregation behavior. If enabled then Camel will process replies out-of-order, e.g. in the order they come back. If disabled, Camel will process replies in the same order as the messages was split.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -790,7 +814,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Will now stop further processing if an exception or failure occurred during processing of an org.apache.camel.Exchange and the caused exception will be thrown. Will also stop if processing the exchange failed (has a fault message) or an exception was thrown and handled by the error handler (such as using onException). In all situations the splitter will stop further processing. This is the same behavior as in pipeline, which is used by the routing engine. The default behavior is to not stop but continue processing till the end.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -822,7 +846,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Shares the org.apache.camel.spi.UnitOfWork with the parent and each of the sub messages. Splitter will by default not share unit of work between the parent exchange and each split exchange. This means each split exchange has its own individual unit of work.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>

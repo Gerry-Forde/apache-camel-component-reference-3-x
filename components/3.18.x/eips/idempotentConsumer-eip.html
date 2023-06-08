@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -752,7 +776,7 @@ the <a href="../../../manual/exchange.html" class="xref page">Exchange</a> faile
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Sets whether to complete the idempotent consumer eager or when the exchange is done. If this option is true to complete eager, then the idempotent consumer will trigger its completion when the exchange reached the end of the block of the idempotent consumer pattern. So if the exchange is continued routed after the block ends, then whatever happens there does not affect the state. If this option is false (default) to not complete eager, then the idempotent consumer will complete when the exchange is done being routed. So if the exchange is continued routed after the block ends, then whatever happens there also affect the state. For example if the exchange failed due to an exception, then the state of the idempotent consumer will be a rollback.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>

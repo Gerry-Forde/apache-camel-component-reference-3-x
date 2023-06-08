@@ -37,6 +37,9 @@
     <a class="nav-link" href="../index.html">Components</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../amqp-component.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../aws-summary.html">AWS</a>
 <ul class="nav-list">
@@ -130,6 +133,9 @@
     <a class="nav-link" href="../infinispan-component.html">Infinispan</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jdbc-component.html">JDBC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../jira-component.html">Jira</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -220,6 +226,9 @@
     <a class="nav-link" href="../slack-component.html">Slack</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../snmp-component.html">SNMP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../sql-component.html">SQL</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -233,6 +242,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../velocity-component.html">Velocity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vertx-http-component.html">Vert.x HTTP Client</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../xquery-component.html">XQuery</a>
@@ -338,6 +350,18 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/attachments.html">Attachments</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../others/dsl.html">DSL</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/java-xml-io-dsl.html">XML Io Dsl</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../others/yaml-dsl.html">YAML DSL</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../others/jta.html">JTA</a>
@@ -723,7 +747,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If the copy attribute is true, a copy of the input Exchange is used for each iteration. That means each iteration will start from a copy of the same message. By default loop will loop the same exchange all over, so each iteration may have different message content.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -731,7 +755,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Enables the while loop that loops until the predicate evaluates to false or null.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
@@ -739,7 +763,7 @@
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If the breakOnShutdown attribute is true, then the loop will not iterate until it reaches the end when Camel is shut down.</p>
 </div></div></td>
-<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
 </tr>
 <tr>
