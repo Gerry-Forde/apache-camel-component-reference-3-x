@@ -3,6 +3,8 @@ name: Zip Contents
 run-name: ${{ github.actor }} zip the contents
 on:
   - push
+      branches:
+          - '!main'   # excludes main
 jobs:
   Zip-contents:
     runs-on: ubuntu-latest
