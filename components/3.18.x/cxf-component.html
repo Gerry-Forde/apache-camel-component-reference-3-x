@@ -746,9 +746,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p><strong>cxfEndpoint</strong> represents a bean ID that references a bean in the
-Spring bean registry. With this URI format, most of the endpoint details
-are specified in the bean definition.</p>
+<p><strong>cxfEndpoint</strong> represents a bean ID that references a bean in the bean registry. With this URI format, most of the endpoint details are specified in the bean definition.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2038,9 +2036,6 @@ SwA is the default, as the default setting for CXF endpoint property <code>mtom-
 <li id="set_the_cxf_endpoint_property_java_quarkus" class="tab">
 <p>Java (Quarkus)</p>
 </li>
-<li id="set_the_cxf_endpoint_property_xml_spring" class="tab">
-<p>XML (Spring)</p>
-</li>
 </ul>
 </div>
 <div id="set_the_cxf_endpoint_property_java_quarkus--panel" class="tabpanel" aria-labelledby="set_the_cxf_endpoint_property_java_quarkus">
@@ -2075,25 +2070,6 @@ public class CxfSoapMtomRoutes extends RouteBuilder {
         return result;
     }
 }</span></code></pre>
-</div>
-</div>
-</div>
-<div id="set_the_cxf_endpoint_property_xml_spring--panel" class="tabpanel" aria-labelledby="set_the_cxf_endpoint_property_xml_spring">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;cxf:cxfEndpoint id="mtomPayloadModeEndpoint" address="http://localhost:${CXFTestSupport.port1}/CxfMtomRouterPayloadModeTest/mtom"
-        wsdlURL="mtom.wsdl"
-        serviceName="ns:MyMtomService"
-        endpointName="ns:MyMtomPort"
-        xmlns:ns="http://apache.org/camel/cxf/mtom_feature"&gt;
-
-    &lt;cxf:properties&gt;
-        &lt;!--  enable mtom by setting this property to true --&gt;
-        &lt;entry key="mtom-enabled" value="true"/&gt;
-        &lt;!--  set the camel-cxf endpoint data fromat to PAYLOAD mode --&gt;
-        &lt;entry key="dataFormat" value="PAYLOAD"/&gt;
-    &lt;/cxf:properties&gt;
-&lt;/cxf:cxfEndpoint&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2326,9 +2302,6 @@ property that can set the default for endpoints created from that component.</p>
 <li id="_tabs_3_java_quarkus" class="tab">
 <p>Java (Quarkus)</p>
 </li>
-<li id="_tabs_3_xml_spring" class="tab">
-<p>XML (Spring)</p>
-</li>
 </ul>
 </div>
 <div id="_tabs_3_java_quarkus--panel" class="tabpanel" aria-labelledby="_tabs_3_java_quarkus">
@@ -2357,26 +2330,6 @@ CxfEndpoint soapMtomEnabledServerPayloadModeEndpoint() {
     result.setAddress("/helloworld");
     return result;
 }</span></code></pre>
-</div>
-</div>
-</div>
-<div id="_tabs_3_xml_spring--panel" class="tabpanel" aria-labelledby="_tabs_3_xml_spring">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"&gt;
-    &lt;!--  it really should have been user-prestream but CXF does have such phase! --&gt;
-    &lt;constructor-arg value="write"/&gt;
-&lt;/bean&gt;
-
-&lt;cxf:cxfEndpoint id="serviceEndpoint" address="http://localhost:${CXFTestSupport.port2}/LoggingInterceptorInMessageModeTest/helloworld"
-    serviceClass="org.apache.camel.component.cxf.HelloService"&gt;
-    &lt;cxf:outInterceptors&gt;
-        &lt;ref bean="loggingOutInterceptor"/&gt;
-    &lt;/cxf:outInterceptors&gt;
-    &lt;cxf:properties&gt;
-        &lt;entry key="dataFormat" value="RAW"/&gt;
-    &lt;/cxf:properties&gt;
-&lt;/cxf:cxfEndpoint&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2614,191 +2567,10 @@ value is <code>false</code>, it will throw an exception.</p></td>
  exchange.getMessage().setHeader(Client.RESPONSE_CONTEXT, map);</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_the_cxf_endpoints_with_spring"><a class="anchor" href="#_configuring_the_cxf_endpoints_with_spring"></a>Configuring the CXF endpoints with Spring</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can configure the CXF endpoint with the Spring configuration file shown below.</p>
-</div>
-<div class="paragraph">
-<p>You can also embed the endpoint into the <code>camelContext</code> tags.</p>
-</div>
-<div class="paragraph">
-<p>When you invoke the service endpoint, you can set the <code>operationName</code> and <code>operationNamespace</code> headers to explicitly state which operation you are calling.</p>
-</div>
-<div class="listingblock">
-<div class="title">Spring configuration:</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:cxf="http://camel.apache.org/schema/cxf"
-        xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
-        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"&gt;
-     &lt;cxf:cxfEndpoint id="routerEndpoint" address="http://localhost:9003/CamelContext/RouterPort"
-            serviceClass="org.apache.hello_world_soap_http.GreeterImpl"/&gt;
-     &lt;cxf:cxfEndpoint id="serviceEndpoint" address="http://localhost:9000/SoapContext/SoapPort"
-            wsdlURL="testutils/hello_world.wsdl"
-            serviceClass="org.apache.hello_world_soap_http.Greeter"
-            endpointName="s:SoapPort"
-            serviceName="s:SOAPService"
-        xmlns:s="http://apache.org/hello_world_soap_http" /&gt;
-     &lt;camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"&gt;
-       &lt;route&gt;
-         &lt;from uri="cxf:bean:routerEndpoint" /&gt;
-         &lt;to uri="cxf:bean:serviceEndpoint" /&gt;
-       &lt;/route&gt;
-    &lt;/camelContext&gt;
-  &lt;/beans&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The namespace declarations at the end of the <code>&lt;cxf:cxfEndpoint/&gt;</code> tag are required.</p>
-</div>
-<div class="paragraph">
-<p>The combined <code>{namespace}localName</code> syntax is not supported for this tag&#8217;s attribute values.</p>
-</div>
-<div class="paragraph">
-<p>The <code>cxf:cxfEndpoint</code> element supports many additional attributes:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 40%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Format</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PortName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The endpoint name this service is implementing. It maps to the <code>wsdl:port@name</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ns:PORT_NAME</code> where <code>ns</code> is a namespace prefix valid at this scope.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serviceName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The service name this service is implementing. It maps to the <code>wsdl:service@name</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ns:SERVICE_NAME</code> where <code>ns</code> is a namespace prefix valid at this scope.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>wsdlURL</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The location of the WSDL.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The classpath, file system, or remote host.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bindingId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>bindingId</code> for the service model.</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The service publish address.</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bus</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The bus name used in the JAX-WS endpoint.</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serviceClass</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the SEI (Service Endpoint Interface) class, with or without JSR181 annotation.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A class name</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>It also supports many child elements:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 40%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Content</th>
-<th class="tableblock halign-left valign-top">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:inInterceptors</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The incoming interceptors for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of <code>&lt;bean&gt;</code> or <code>&lt;ref&gt;</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:inFaultInterceptors</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The incoming fault interceptors for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of <code>&lt;bean&gt;</code> or
-<code>&lt;ref&gt;</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:outInterceptors</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The outgoing interceptors for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of <code>&lt;bean&gt;</code> or <code>&lt;ref&gt;</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:outFaultInterceptors</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The outgoing fault interceptors for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of <code>&lt;bean&gt;</code> or <code>&lt;ref&gt;</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:properties</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A properties map supplied to the JAX-WS endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See below.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:handlers</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A JAX-WS handler list which should be supplied to the JAX-WS endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See below.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:dataBinding</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>DataBinding</code> to use in the endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can supply this with the Spring <code>&lt;bean class="MyDataBinding"/&gt;</code>
-syntax.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:binding</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifes which <code>BindingFactory</code> to use for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can supply this with the Spring <code>&lt;bean class="MyBindingFactory"/&gt;</code> syntax.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:features</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The features that hold the interceptors for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of beans or refs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:schemaLocations</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The schema locations for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of <code>schemaLocations</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cxf:serviceFactory</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The service factory for this endpoint.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can supply this with the Spring`&lt;bean class="MyServiceFactory"/&gt;` syntax</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>You can find more advanced examples that show how to provide interceptors, properties and handlers on the CXF <a href="http://cxf.apache.org/docs/jax-ws-configuration.html">JAX-WS
-Configuration page</a>.</p>
-</div>
 <div class="sect2">
 <h3 id="_configuring_the_data_format"><a class="anchor" href="#_configuring_the_data_format"></a>Configuring the data format</h3>
 <div class="paragraph">
-<p>You can use <code>cxf:properties</code> in the spring configuration file to set the <code>dataFormat</code> for the camel-cxf endpoint and the <code>setDefaultBus</code> properties.</p>
+<p>You can use <code>cxf:properties</code> in the configuration file to set the <code>dataFormat</code> for the camel-cxf endpoint and the <code>setDefaultBus</code> properties.</p>
 </div>
 <div id="_tabs_4" class="openblock tabs is-sync is-loading">
 <div class="title">Configuration options:</div>
@@ -2807,9 +2579,6 @@ Configuration page</a>.</p>
 <ul>
 <li id="_tabs_4_java_quarkus" class="tab">
 <p>Java (Quarkus)</p>
-</li>
-<li id="_tabs_4_xml_spring" class="tab">
-<p>XML (Spring)</p>
 </li>
 </ul>
 </div>
@@ -2835,22 +2604,6 @@ CxfEndpoint testEndpoint() {
     result.setAddress("/hello");
     return result;
 }</span></code></pre>
-</div>
-</div>
-</div>
-<div id="_tabs_4_xml_spring--panel" class="tabpanel" aria-labelledby="_tabs_4_xml_spring">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;cxf:cxfEndpoint id="testEndpoint" address="http://localhost:9000/router"
-     serviceClass="org.apache.camel.component.cxf.HelloService"
-     endpointName="s:HelloPort"
-     serviceName="s:HelloService"
-     xmlns:s="http://www.example.com/test"&gt;
-     &lt;cxf:properties&gt;
-       &lt;entry key="dataFormat" value="RAW"/&gt;
-       &lt;entry key="setDefaultBus" value="true"/&gt;
-     &lt;/cxf:properties&gt;
-   &lt;/cxf:cxfEndpoint&gt;</code></pre>
 </div>
 </div>
 </div>
